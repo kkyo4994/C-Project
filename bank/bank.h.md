@@ -17,7 +17,7 @@ typedef struct Account {
 void addUser(Acc* user); // 계좌 추가하는 함수
 void deleteUser(Acc* user); // 계좌 삭제하는 함수
 void management(Acc* user); // 계좌 관리하는 함수
-int getIndex(Acc* user, int usernumber); // 계좌 추가하는 함수
+int getIndex(Acc* user, int usernumber); // 
 void remittance(Acc* user); // 송금하는 함수
 void deposit(Acc* user); // 입금하는 함수
 void withdrawal(Acc* user); // 출금하는 함수
