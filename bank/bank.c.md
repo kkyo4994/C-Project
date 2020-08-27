@@ -24,7 +24,7 @@ void addUser(Acc* user) {
 	printf("예금주명을 입력해 주세요.\n"); 
 	scanf("%s", user[accCount].name); // 사용할 계좌의 이름을 입력
 	user[accCount].balance = 0; // 계좌를 처음 만들었으니 계좌의 금액은 0
-	user[accCount].number= accNum; // 
+	user[accCount].number = accNum; // 구조체 배열의 number에 고유번호를 저장한다
 	printf("계좌 고유 번호는 %d입니다.\n", accNum);
 	printf("계좌가 추가되었습니다.\n");
 	accNum++; // 계좌가 추가 될 때마다 계좌의 겹치지 않게 고유번호가 1 늘어난다
@@ -40,14 +40,14 @@ void deleteUser(Acc* user) {
 	int usernumber, index;
 	printf("삭제할 계좌의 고유 번호를 입력하세요.\n");
 	scanf("%d", &usernumber); // 계좌의 고유번호를 입력받는다
-	index = getIndex(user, usernumber);
+	index = getIndex(user, usernumber);  // index에 대해서 getIndex를 실행
 	if (0 <= index) { // 만약 index가 0보다 크거나 같으면
 		printf("계좌가 삭제되었습니다.\n"); 
 			for (int i = index; i < accCount; i++) { //  
 				strcpy(user[i].name, user[i + 1].name);
 				user[i].balance = user[i + 1].balance;
 				user[i].number = user[i + 1].number;
-                // 계좌들의 배열들이 ?
+                // 이름과 돈과 고유 번호가 각각 계좌들의 배열들이 자신의 앞에 있는 배열에 저장된다
 			}
 			accCount--; // 계좌 하나 삭제
 	}
@@ -64,7 +64,7 @@ void deleteUser(Acc* user) {
 void management(Acc* user) {
 	int controlNum;
 	printf("송금을 하시려면 1, 입금을 하시려면 2, 출금을 하시려면 3을 입력해 주세요.\n");
-	scanf("%d", &controlNum);
+	scanf("%d", &controlNum); // 
 	if (controlNum == 1) { // 만약에 controlNum이 1이면
 		remittance(user);  // 송금하는 함수로 이동
 	}
@@ -99,14 +99,14 @@ void remittance(Acc* user) {
 	int myacc, youracc, money, myindex, yourindex;
 	printf("당신의 계좌의 고유 번호를 입력해 주세요.\n");
 	scanf("%d", &myacc); // 내 계좌의 고유 번호를 입력받는다
-	myindex = getIndex(user, myacc); 
+	myindex = getIndex(user, myacc); // myindex에 대해서 getIndex를 실행
 	if (-1 == myindex) { // myindex가 1이면
 		printf("없는 번호이니 다시 입력해 주세요.\n");
 		return;
 	}
 	printf("받을 사람의 계좌의 고유 번호를 입력해 주세요.\n");
 	scanf("%d", &youracc); // 상대방 계좌의 고유 번호를 입력받는다
-	yourindex = getIndex(user, youracc);
+	yourindex = getIndex(user, youracc);  // yourindex에 대해서 getIndex를 실행
 	if (-1 == yourindex) { // yourindex가 1이면
 		printf("없는 번호이니 다시 입력해 주세요.\n");
 		return;
@@ -118,7 +118,7 @@ void remittance(Acc* user) {
 		return;
 	}
 	user[myindex].balance -= money; // 내 계좌에 있는 돈에서 입력받은 돈을 뺸다
-	yourindex = getIndex(user, youracc);
+	yourindex = getIndex(user, youracc);  // yourindex에 대해서 getIndex를 실행
 	user[yourindex].balance += money; // 상대방의 계좌에 있는 돈에 입력받은 돈을 더한다
 	printf("돈이 보내졌습니다.\n"); 
 	return;
@@ -132,7 +132,7 @@ void deposit(Acc* user) {
 	int myacc, youracc, money, myindex;
 	printf("당신의 계좌의 고유 번호를 입력해 주세요.\n");
 	scanf("%d", &myacc); // 내 계좌의 고유 번호를 입력받는다
-	myindex = getIndex(user, myacc);
+	myindex = getIndex(user, myacc); // myindex에 대해서 getIndex를 실행
 	if (-1 == myindex) {  // myindex가 1이면
 		printf("없는 번호이니 다시 입력해 주세요.\n");
 		return;
@@ -152,7 +152,7 @@ void withdrawal(Acc* user) {
 	int myacc, money, myindex;
 	printf("당신의 계좌의 고유 번호를 입력해 주세요.\n");
 	scanf("%d", &myacc); // 내 계좌의 고유 번호를 입력받는다
-	myindex = getIndex(user, myacc);
+	myindex = getIndex(user, myacc); // myindex에 대해서 getIndex를 실행
 	if (-1 == myindex) { // 만약 myindex가 1이면
 		printf("없는 번호이니 다시 입력해 주세요.\n");
 		return;
@@ -169,7 +169,7 @@ void withdrawal(Acc* user) {
 
 ```c
 void print_all_information(Acc* user) {
-	for (int i = 0; i < accCount; i++) {// 0부터 현재 있는 계좌 수까지 반복
+	for (int i = 0; i < accCount; i++) { // 0부터 현재 있는 계좌 수까지 반복
 		printf("예금주 명 : %s\n", user[i].name);
 		printf("현재 잔액 : %d\n", user[i].balance);
 		printf("계좌 고유 번호 : %d\n", user[i].number);
@@ -186,7 +186,7 @@ void print_information(Acc* user) {
 	int uniqueNumber, myindex;
 	printf("당신의 계좌의 고유 번호를 입력해 주세요.\n");
 	scanf("%d", &uniqueNumber); // 나의 고유 번호를 입력받는다
-	myindex = getIndex(user, uniqueNumber);
+	myindex = getIndex(user, uniqueNumber); // myindex에 대해서 getIndex를 실행
 	if (-1 == myindex) {  // myindex가 1이면
 		printf("없는 번호이니 다시 입력해 주세요.\n");
 		return;
