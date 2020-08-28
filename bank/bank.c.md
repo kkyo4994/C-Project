@@ -11,7 +11,7 @@ static int accCount = 0;  // accCount을 정적 변수 선언 및 값 초기화 
 static int accNum = 1;  // accNum을 정적 변수 선언 및 값을 0 설정 [고유번호를 의미]
 ```
 
-* static == 정적 변수 [정적 변수란 정적으로 할당되는 변수 /정적은 '움직임이 없이 고정이 된'이라는 뜻이다]
+* static == 정적 변수 : 정적 변수는 함수를 벗어나더라도 변수가 사라지지 않고 계속 유지됨[정적은 '움직임이 없이 고정이 된'이라는 뜻이다]
 
 [계좌 추가]
 
@@ -43,8 +43,8 @@ void deleteUser(Acc* user) {
 	index = getIndex(user, usernumber);  // index에 대해서 getIndex를 실행
 	if (0 <= index) { // 만약 index가 0보다 크거나 같으면
 		printf("계좌가 삭제되었습니다.\n"); 
-			for (int i = index; i < accCount; i++) { //  
-				strcpy(user[i].name, user[i + 1].name);
+			for (int i = index; i < accCount; i++) { // index 수부터 현재 있는 계좌 수까지 반복
+				strcpy(user[i].name, user[i + 1].name); // (자세한 설명은 밑)
 				user[i].balance = user[i + 1].balance;
 				user[i].number = user[i + 1].number;
                 // 이름과 돈과 고유 번호가 각각 계좌들의 배열들이 자신의 앞에 있는 배열에 저장된다
@@ -57,6 +57,8 @@ void deleteUser(Acc* user) {
 	return;
 }
 ```
+
+* strcpy은 문자열을 복사하는 함수이다. 즉, user[i].name = user[i + 1].name라는 의미이다. 
 
 [계좌 관리]
 
@@ -79,7 +81,7 @@ void management(Acc* user) {
 }
 ```
 
-
+[계좌의 인덱스를 가져옴]
 
 ```c
 int getIndex(Acc* user, int usernumber) {
