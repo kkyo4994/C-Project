@@ -1,126 +1,26 @@
-# library.c
-
-[기본]
+# library.h
 
 ```c
-#include <stdio.h>
-#include <string.h>
-#include "library.h"
+#ifndef __LIBRARY_H__ // __LIBRARY_H__이 main에 선언되어있지 않으면 실행
+#define __LIBRARY_H__ // __LIBRARY_H__을 선언
 
-static int bookCount = 0;
-static int booknumber = 1;
-```
+#define MAX_BOOK_COUNT 3
 
-[책 추가]
+typedef struct _BOOK {
+	char name[20]; // 도서명
+	char author[10]; // 지은이
+	int pay; // 가격
+	int state; // 대출 현황
+	int number; // 책의 번호
+} Book; // _BOOK를 짧게 Book로 부를 수 있다
 
-```c
-void addBook(Book* book) {
-	if (bookCount == MAX_BOOK_COUNT) {
-		printf("책이 많습니다.\n");
-		return;
-	}
-	printf("도서명을 입력해 주세요.\n");
-	scanf("%s", book[bookCount].name);
-	printf("책의 지은이를 입력해 주세요.\n");
-	scanf("%s", book[bookCount].author);
-	printf("책의 가격을 입력해 주세요.\n");
-	scanf("%d", book[bookCount].pay);
-	book[MAX_BOOK_COUNT].state = 0;
-	book[MAX_BOOK_COUNT].number = booknumber;
-	printf("책의 번호는 %d입니다.\n", booknumber);
-	booknumber++;
-	bookCount++;
-	return;
-}
-```
+void addBook(Book* book); // 책을 추가하는 함수
+int bookindex(Book* book, int NUMBER); // 책의 인덱스를 가져오는 함수
+void borrowBook(Book* book); // 책을 대출하는 함수
+void getBackBook(Book* book); // 책을 반납하는 함수
+void all_showBook(Book* book); // 모든 책의 정보를 출력하는 함수
+void showBook(Book* book); // 특정 책의 정보를 출력하는 함수
 
-[]
-
-```c
-int bookindex(Book* book, int NUMBER) {
-	for (int i = 0; i < bookCount; i++) {
-		if (book[bookCount].number == NUMBER) {
-			return i;
-		}
-	}
-	return -1;
-}
-```
-
-[책 대출]
-
-```c
-void borrowBook(Book* book) {
-	int BookNum, Bookindex;
-	printf("책의 번호를 입력해 주세요.\n");
-	scanf("%d", &BookNum);
-	Bookindex = bookindex(book, BookNum);
-	if (-1 == Bookindex) {
-		printf("없는 번호니, 다시 확인해 주세요.\n");
-		return;
-	}
-	if (book[Bookindex].state != 0){
-		printf("현재 대출 상태인 책입니다.\n");
-		return;
-	}
-	else book[Bookindex].state = 1;
-		printf("대출이 되었습니다.\n");
-		return;
-}
-```
-
-[책 반납]
-
-```c
-void getBackBook(Book* book) {
-	int BookNum, Bookindex;
-	printf("책의 번호를 입력해 주세요.\n");
-	scanf("%d", &BookNum);
-	Bookindex = bookindex(book, BookNum);
-	if (-1 == Bookindex) {
-		printf("없는 번호니, 다시 확인해 주세요.\n");
-		return;
-	}
-	if (book[Bookindex].state != 0) {
-		book[Bookindex].state = 0;
-		printf("반납이 되었습니다.\n");
-		return;
-	}
-	return;
-}
-```
-
-[모든 책 정보 출력]
-
-```c
-void all_showBook(Book* book) {
-	for (int i = 0; i < bookCount; i++) {
-		printf("도서명 : %s\n", book[i].name);
-		printf("지은이 : %s\n", book[i].author);
-		printf("가격 : %d\n", book[i].pay);
-		printf("대출 현황 : %d\n", book[i].state);
-	}
-	return;
-}
-```
-
-[특정 책 정보 출력]
-
-```c
-void showBook(Book* book) {
-	int BookNum, Bookindex;
-	printf("책의 번호를 입력해 주세요.\n");
-	scanf("%d", &BookNum);
-	Bookindex = bookindex(book, BookNum);
-	if (-1 ==  Bookindex) {
-		printf("없는 번호니, 다시 확인해 주세요.\n");
-		return;
-	}
-	printf("도서명 : %s\n", book[Bookindex].name);
-	printf("지은이 : %s\n", book[Bookindex].author);
-	printf("가격 : %d\n", book[Bookindex].pay);
-	printf("대출 현황 : %d\n", book[Bookindex].state);
-	return;
-}
+#endif __LIBRARY_H__ // #define __LIBRARY_H__부터 여기까지 실행
 ```
 
